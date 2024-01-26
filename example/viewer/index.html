@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Viewer</title>
+    <style>
+        body { margin: 0; }
+    </style>
+    <script type="module">
+        import { PerspectiveCamera, Scene, WebGLRenderer, PointLight, SphereGeometry, MeshBasicMaterial, Mesh, Group, Color } from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // Read data from json
+        fetch('system.json')
+            .then(response => response.json())
+            .then(systemData => {
+                // Build the scene
+                let scene = new Scene();
+
+                // Camera creation
+                let camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 50;
+
+                // Renderer creation
+                let renderer = new WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Disabling scrolling when the mouse is over the canvas
+                renderer.domElement.addEventListener('wheel', function(event) {
+                    event.preventDefault();
+                }, { passive: false });
+
+                // Light creation
+                let light = new PointLight(0xFFFFFF, 1, 1000);
+                light.position.set(0, 0, 0);
+                scene.add(light);
+
+                // Area
+                let systemSize = systemData.system_structure.size;
+                let geometry = new SphereGeometry(systemSize, 32, 32);
+                let material = new MeshBasicMaterial({color: 0xd3d3d3, transparent: true, opacity: 0.2});
+                let sphere = new Mesh(geometry, material);
+                scene.add(sphere); // Aggiungi l'area del sistema alla scena
+
+                // Build the planets group
+                let planetGroup = new Group();
+
+                // Build the planets
+                for (let planet of systemData.planets) {
+                    let geometry = new SphereGeometry(1, 32, 32); // Assumendo che tutti i pianeti abbiano la stessa dimensione
+
+                    // Genera un colore casuale
+                    let color = new Color(Math.random() * 0xffffff);
+
+                    let material = new MeshBasicMaterial({color: color}); // Usa il colore casuale per il materiale
+                    let sphere = new Mesh(geometry, material);
+                    sphere.position.set(planet.x, planet.y, planet.z);
+                    planetGroup.add(sphere); // Aggiungi il pianeta al gruppo
+                }
+
+                scene.add(planetGroup); // Aggiungi il gruppo alla scena
+
+                // Animates the scene
+                function animate() {
+                    requestAnimationFrame(animate);
+
+                    // Ruota il gruppo di pianeti attorno all'asse y
+                    planetGroup.rotateY(0.01);
+
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                // Zoom and rotation controls
+                let controls = new OrbitControls(camera, renderer.domElement);
+                controls.minDistance = 100;
+                controls.maxDistance = 200;
+                controls.update();
+            });
+    </script>
+</head>
+<body>
+</body>
+</html>
