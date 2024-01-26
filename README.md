@@ -1,11 +1,16 @@
-# Simple Planetary System Generator
+# Simple Planetary System Generator 💫
+[![Go Report Card](https://goreportcard.com/badge/github.com/Valkyrie00/simple-planetary-system-go)](https://goreportcard.com/report/github.com/Valkyrie00/simple-planetary-system-go)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Valkyrie00/simple-planetary-system-go.svg)](https://pkg.go.dev/github.com/Valkyrie00/simple-planetary-system-go)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This is a simple planetary system generator written in Go.
 The generated planetary systems are not realistic or based on scientific data,
 but they are useful for testing the game mechanics of a space game for example.
 The entire generator is based on the Gaussian distribution and the generate planets cluster around the center of the system.
 
-Here is an example of a generated planetary system:
+Below you can see an example of a generated planetary system:
+
+
 ![example-1.gif](assets%2Fexample-1.gif)
 
 ## Installation
