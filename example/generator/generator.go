@@ -15,10 +15,10 @@ func main() {
 
 	// Define the system structure
 	structure := &sps.SystemStructure{
-		MinDensity:      29,    // Minimum density of planets
+		MinDensity:      500,   // Minimum density of planets
 		DensityFactor:   3,     // Density factor of planets
-		DeviationFactor: 0.4,   // Deviation Gaussian factor - Increase this value to increase the deviation of the planets
-		Size:            100,   // Size of the system
+		DeviationFactor: 0.1,   // Deviation Gaussian factor - Increase this value to increase the deviation of the planets
+		Size:            600,   // Size of the system
 		Seed:            &seed, // System Seed
 	}
 
